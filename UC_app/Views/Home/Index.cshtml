@@ -1,0 +1,135 @@
+﻿@model UC_app.ModelsVM.UserCommentVM
+
+@{
+    ViewBag.Title = "Comments";
+}
+
+<div class="row">
+
+    <div class="col-md-4 col-md-offset-1">
+        <div class="col-md-2 col-md-offset-1">
+            <img src="~/Content/avatar.jpg" style="height:80px;width:80px" alt="Avatar">
+        </div>
+        <div class="col-md-9">
+            <div class="form-group col-md-12">
+                <label for="UserName">User Name</label>
+                <input type="text" id="UserName" class="form-control" value="@Model.UserName" placeholder="Enter user name">
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label for="Date">Date</label>
+                    <input type="text" id="Date" class="form-control" value="" placeholder="Date" />
+                </div>
+                <div class="col-md-6">
+                    <label for="SelectGender">Gender</label>
+                    <select class="form-control" id="Gender">
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="TextComment"></label>
+                <textarea id="Text" class="form-control" rows="3" value="" placeholder="Leave your comment here"></textarea>
+                <small class="text-muted"> max 300 characters </small>
+            </div>
+
+            <div class="form-group col-md-4 col-md-offset-8">
+                <button type="submit" id="SubmitPost" class="btn btn-danger btn-lg">
+                    Post
+                    <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <fieldset class="coolfieldset" style="border:1px solid #aaa; height: 100%; padding: 22px">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <h3 style="color: darkred">Recent Comments</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" id="SearchText" class="form-control" style="border-radius:30px;" placeholder="Search">
+                        <button type="submit" id="SubmitSearch" class="btn btn-default btn-success" value="Submit">Update</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12" style="height:0px; margin: 12px; border-bottom:1px solid #aaa"></div>
+
+            <div class="col-md-12" id="CommentsSection"></div>
+
+        </fieldset>
+    </div>
+</div>
+
+
+@section scripts {
+    <script type="text/javascript">
+
+        $("#SubmitPost").click(function postComment() {
+
+            var request = {
+                UserName: $('#UserName').val(),
+                Date: $('#Date').val(),
+                Gender: $('#Gender').val(),
+                Text: $('#Text').val()
+            };
+            $.ajax({
+                url: "/Home/PostComment",
+                type: "POST",
+                data: request,
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                success: function (response) {
+                    $('#CommentsSection').html(response);
+                }
+            });
+        });
+
+        $("#SubmitSearch").click(function postComment() {
+            var request = {
+                SearchText: $('#SearchText').val(),
+            };
+            $.ajax({
+                url: "/Home/SearchComments",
+                type: "POST",
+                data: request,
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                success: function (response) {
+                    $('#CommentsSection').html(response);
+                }
+            });
+        });
+
+        $(function () {
+            $.ajax({
+                url: "/Home/SearchComments",
+                type: "POST",
+                error: function (response) {
+                    alert(response.responseText);
+                },
+                success: function (response) {
+                    $('#CommentsSection').html(response);
+                }
+            });
+        });
+
+        $(function () {
+            $('#Date').datetimepicker(
+                { format: 'YYYY-MM-DD HH:mm' });
+        });
+
+    </script>
+}
+
+
+
+
