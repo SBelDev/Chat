@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using UC_app.Models;
-using UC_app.ModelsVM;
 
 namespace UC_app.Controllers
 {
@@ -14,31 +13,29 @@ namespace UC_app.Controllers
 
         public ActionResult Index()
         {
-            var model = new UserCommentVM();
-            model.Comments = GetCommentsByName();
-
-            return View("Index", model);
+            return View("Index");
         }
 
-        public ActionResult PostComment(string UserName, string Date, string Gender, string Text)
+        [HttpPost]
+        public ActionResult PostComment(string UserName, string Date, string Gender, string Text, string AvatarBase64)
         {
             if (ModelState.IsValid)
             {
                 AddComment(new Comment()
                 {
                     UserName = UserName,
-                    Date = DateTime.ParseExact(Date,"yyyy-MM-dd HH:mm", null),
+                    Date = DateTime.ParseExact(Date, "yyyy-MM-dd HH:mm", null),
                     Gender = Gender,
-                    Text = Text
+                    Text = Text,
+                    AvatarBase64 = !String.IsNullOrEmpty(AvatarBase64) ? AvatarBase64 : null
                 });
             }
 
             var model = GetCommentsByName();
-
             return PartialView("Comments", model);
         }
 
-        public ActionResult SearchComments(string SearchText)
+        public ActionResult GetComments(string SearchText)
         {
             var model = GetCommentsByName(SearchText);
 

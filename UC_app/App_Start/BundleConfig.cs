@@ -27,13 +27,12 @@ namespace UC_app
                     "~/Scripts/moment*",
                     "~/Scripts/bootstrap-datetimepicker*"));
 
-            //bundles.Add(new StyleBundle("~/Content/css").Include(
-            //          "~/Content/bootstrap.css",
-            //          "~/Content/Site.css"
-            //          ));
-
             bundles.Add(new ScriptBundle("~/Content/css")
-                     .IncludeDirectory("~/Content", "*.css", true));
+                    .Include("~/Content/bootstrap.css", new CssRewriteUrlTransform())
+                    .Include("~/Content/bootstrap-theme.css")
+                    .Include("~/Content/bootstrap-datetimepicker.css")
+                    .Include("~/Content/Site.css")
+                    );
 
         }
     }

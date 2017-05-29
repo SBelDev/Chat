@@ -1,42 +1,43 @@
 ﻿@model IEnumerable<UC_app.Models.Comment>
 
-    @foreach (var comment in Model)
-    {
-
-        <div class="col-md-12">
-            <img src="~/Content/avatar.jpg" style="height:80px;width:80px" alt="Avatar">
-            <strong class="primary-font" style="color:darkred">
+<div class="row line"></div>
+@foreach (var comment in Model)
+{
+    <div class="row">
+        <div class="col-md-11 comment-section">
+            <img class="avatar" src="@(!String.IsNullOrEmpty(comment.AvatarBase64) ? comment.AvatarBase64 : "/Content/avatar.jpg")">
+            <strong class="primary-font">
                 @comment.UserName
             </strong>
-            <label for="Text"> Commented: </label>
-            <label for="Comment" @(comment.Gender == "Male" ? "style=color:darkred" : "style=color:forestgreen")> @comment.Text </label>
+            <span> Commented: </span>
+            <span class="comment-text" @(comment.Gender == "Male" ? "style=color:darkred" : "style=color:forestgreen")> @comment.Text </span>
             <div>
                 <small class="text-muted">
                     <span class="glyphicon glyphicon-time"></span>Posted @TimeSpendFrom(comment.Date)
                 </small>
             </div>
-
         </div>
-        <div class="col-md-12" style="height:0px; margin: 12px; border-bottom:1px dotted #aaa"></div>
+    </div>
 
-    }
+    <div class="row line-dotted"></div>
+}
 
-    @helper TimeSpendFrom(DateTime date)
+@helper TimeSpendFrom(DateTime date)
+{
+    TimeSpan span = DateTime.Now.Subtract(date);
+    if (Math.Abs(span.TotalMinutes) < 60)
     {
-TimeSpan span = DateTime.Now.Subtract(date);
-if (Math.Abs(span.TotalMinutes) < 60)
-{
-        @String.Format("{0} minutes ago", span.Minutes);
-    return;
-}
-else if (Math.Abs(span.TotalHours) < 60)
-{
-        @String.Format("{0} hours ago", span.Hours);
-    return;
-}
-else
-{
-        @String.Format("{0} days ago", span.Days);
-    return;
-}
+            @String.Format("{0} minutes ago", span.Minutes);
+        return;
+    }
+    else if (Math.Abs(span.TotalHours) < 60)
+    {
+            @String.Format("{0} hours ago", span.Hours);
+        return;
+    }
+    else
+    {
+            @String.Format("{0} days ago", span.Days);
+        return;
+    }
 }

@@ -9,25 +9,61 @@
     padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+
+.avatar {
+    height: 80px;
+    width: 80px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+
+
+.line {
+    height: 0px;
+    margin: 12px;
+    border-bottom: 1px solid #aaa;
 }
 
-/*                */
 
- .line{
-width: 112px;
-height: 47px;
-border-bottom: 1px solid black;
-position: absolute;
+.line-dotted {
+    height: 0px;
+    margin: 12px;
+    border-bottom: 1px dotted #aaa;
 }
+
+.comments-fielset {
+    height: 100%;
+    padding: 22px;
+    border: 1px solid #aaa;
+}
+
+.comment-section {
+    margin: 12px;
+}
+
+    h3, h4, .comment-section strong {
+        color: darkred;
+    }
+
+    .comment-section span {
+        word-wrap: break-word;
+    }
+
+#SearchText {
+    border-radius: 30px;
+}
+
+.errorValidation {
+    color: darkred;
+    font-size: 85%;
+}
+
+.btn-circle {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+

@@ -8,6 +8,6 @@ namespace UC_app.Models
         public DateTime Date { get; set; }
         public string Gender { get; set; }
         public string Text { get; set; }
-        public Byte[] Avatar { get; set; }
+        public string AvatarBase64 { get; set; }
     }
 }
